@@ -27,8 +27,8 @@ export class ApiService {
 		private httpClient: HttpClient) {
 		// Load data strategy by default
 		this.apiResponseStrategies = [
-			new ApiDataResponseStrategyModel(),
-			new ApiRootResponseStrategyModel()
+			new ApiRootResponseStrategyModel(),
+			new ApiDataResponseStrategyModel()
 		];
 
 		// Defaults
