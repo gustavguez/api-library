@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { ApiDataResponseStrategyModel } from './response-strategies/api-data-response-strategy.model';
 import { ApiRootResponseStrategyModel } from './response-strategies/api-root-response-strategy.model';
+import { ApiHalResponseStrategyModel } from './response-strategies/api-hal-response-strategy.model';
 import { ApiResponseStrategyInterface } from './api-response-strategy.interface';
 import { ApiResponseModel } from './api-response.model';
 import { DataUtility } from './utilities/data.utility';
@@ -28,7 +29,8 @@ export class ApiService {
 		// Load data strategy by default
 		this.apiResponseStrategies = [
 			new ApiRootResponseStrategyModel(),
-			new ApiDataResponseStrategyModel()
+			new ApiDataResponseStrategyModel(),
+			new ApiHalResponseStrategyModel()
 		];
 
 		// Defaults
