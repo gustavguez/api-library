@@ -176,7 +176,7 @@ export class ApiService {
 		};
 
 		// Url
-		const url: string = this.apiURL + uri + (id ? '/' + id : '');
+		const url: string = this.apiURL + uri + `${id ? '/' + id : ''}`;
 
 		// Do request
 		return this.httpClient
@@ -217,6 +217,48 @@ export class ApiService {
 				// Map response
 				map((response: any) => this.parseResponse(response))
 			);
+	}
+
+	// Update an object with PUT
+	public updateObj(uri: string, id: any, obj: any): Observable<ApiResponseModel> {
+		// headers obj
+		const headers: any = {};
+
+		//Check access token
+		if(this.accessToken) {
+			headers.Authorization = `Bearer ${this.accessToken}`
+		}
+
+		// Options
+		const httpOptions = {
+			headers: new HttpHeaders(headers)
+		};
+
+		// Url
+		const url: string = this.apiURL + uri + `/${id}`;
+
+		// Check form data
+		if (DataUtility.needFormData(obj)) {
+			obj = DataUtility.jsonToFormData(obj);
+		}
+
+		// Do request
+		return this.httpClient
+			.put(url, obj, httpOptions)
+			.pipe(
+				// Map response
+				map((response: any) => this.parseResponse(response))
+			);
+	}
+
+	// Create | Update an object with POST
+	public saveObj(uri: string, obj: any): Observable<ApiResponseModel> { 
+		if(obj.id) {
+			const id: any = obj.id;
+			delete obj.id;
+			return this.updateObj(uri, id, obj);
+		}
+		return this.createObj(uri, obj);
 	}
 
 	// Parse response
