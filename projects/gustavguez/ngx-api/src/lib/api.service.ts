@@ -160,6 +160,33 @@ export class ApiService {
 			);
 	}
 
+	// Update an object using PATCH
+	public partialUpdateList(uri: string, obj: any): Observable<ApiResponseModel> {
+		// headers obj
+		const headers: any = {};
+
+		//Check access token
+		if(this.accessToken) {
+			headers.Authorization = `Bearer ${this.accessToken}`
+		}
+
+		// Options
+		const httpOptions = {
+			headers: new HttpHeaders(headers)
+		};
+
+		// Url
+		const url: string = this.apiURL + uri;
+
+		// Do request
+		return this.httpClient
+			.patch(url, obj, httpOptions)
+			.pipe(
+				// Map response
+				map((response: any) => this.parseResponse(response))
+			);
+	}
+
 	// Delete an object using DELETE
 	public deleteObj(uri: string, id?: any): Observable<boolean> {
 		// headers obj
